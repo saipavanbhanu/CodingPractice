@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-class Student {
+class Student implements Comparable<Student>{
     int rollno;
     String name, address;
     // Constructor
@@ -19,6 +19,12 @@ class Student {
         return this.rollno + " " + this.name +
                 " " + this.address;
     }
+	@Override
+	public int compareTo(Student s) {
+		// TODO Auto-generated method stub
+		return name.compareTo(s.name);
+	}
+	
 }
 class SortByRoll implements Comparator<Student>{
     public int compare(Student s1, Student s2){
@@ -46,6 +52,9 @@ public class CollectionsSortUsage {
         ar.add(new Student(121, "cccc", "jaipur"));
         System.out.println(ar);
         Collections.sort(ar,new SortByRoll());
-        System.out.println(ar);
+        System.out.println("Sort by rollno: "+ar);
+        Collections.sort(ar);
+        System.out.println("Sort by name: "+ar);
+        
     }
 }
