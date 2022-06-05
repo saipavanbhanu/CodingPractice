@@ -29,12 +29,7 @@ public class MergeSortOnLinkedList {
         Node middle = findMiddle(head);
         Node nextMiddle = middle.next;
         middle.next = null;
-        /*System.out.println("first half");
-        printList(head);
-        System.out.println("second half");
-        printList(nextMiddle);
-        System.out.println();
-*/
+  
         Node firstHalf = mergeSort(head);
         Node secondHalf = mergeSort(nextMiddle);
 
