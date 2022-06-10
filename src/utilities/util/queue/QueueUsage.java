@@ -8,7 +8,7 @@ public class QueueUsage {
             queue.add(i);
         }
         System.out.println(queue);
-        int removedElement = queue.remove();
+        int removedElement = queue.poll();
         System.out.println("removed element :: "+removedElement);
         System.out.println("After removing Queue ::"+queue);
         int head = queue.peek();
