@@ -7,4 +7,9 @@ public class Node{
         this.data = data;
         left = right = null;
     }
+    @Override
+    public String toString() {
+    	// TODO Auto-generated method stub
+    	return Integer.toString(data);
+    }
 }
