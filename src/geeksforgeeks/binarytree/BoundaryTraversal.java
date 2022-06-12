@@ -17,8 +17,9 @@ public class BoundaryTraversal {
         printLeaves(node.right);
     }
  
-    // A function to print all left boundary nodes, except a leaf node.
-    // Print the nodes in TOP DOWN manner
+    /* A function to print all left boundary nodes, except a leaf node.
+     Print the nodes in TOP DOWN manner
+    */
     void printBoundaryLeft(Node node)
     {
         if (node == null)
