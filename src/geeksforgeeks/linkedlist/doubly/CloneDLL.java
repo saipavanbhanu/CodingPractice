@@ -3,6 +3,8 @@ package geeksforgeeks.linkedlist.doubly;
 import java.util.HashMap;
 import java.util.Map;
 
+//https://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/
+
 public class CloneDLL {
     Node head;//Linked list head reference
     static class Node {
@@ -44,9 +46,6 @@ public class CloneDLL {
             first.next.random = first.random.next;
             first = first.next.next;
         }
-
-        //System.out.println("List:: ");
-        //print();
 
         first = this.head;
         Node copy = this.head.next;
