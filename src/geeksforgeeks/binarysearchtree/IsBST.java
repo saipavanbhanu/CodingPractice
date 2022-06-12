@@ -18,6 +18,7 @@ public class IsBST {
 		}
 	}
 	Node root;
+	Node prev;
 	List<Node> inOrderList;
 	public IsBST() {
 		/*
@@ -27,6 +28,7 @@ public class IsBST {
 		 * */
 		inOrderList = new ArrayList<IsBST.Node>();
 		root = null;
+		prev = null;
 	}
 	
 	public static void main(String[] args) {
@@ -38,10 +40,17 @@ public class IsBST {
         tree.root.left.left = new Node(1);
         tree.root.left.right = new Node(3);
  
-        if (tree.isBST())
+//        if (tree.isBST())
+//            System.out.println("IS BST");
+//        else
+//            System.out.println("Not a BST");
+        
+        if (tree.isBSTWithoutExtraSpace())
             System.out.println("IS BST");
         else
             System.out.println("Not a BST");
+        
+        
 	}
 	//using temp array.
 	private boolean isBST() {
@@ -57,6 +66,11 @@ public class IsBST {
 		}
 		return true;
 	}
+	private boolean isBSTWithoutExtraSpace() {
+		return isInOrderBstWithoutExtraSpace(root);
+	}
+	
+	
 	private void isInOrderBST(Node node){
 		if(node == null) {
 			return;
@@ -67,5 +81,24 @@ public class IsBST {
 		}
 	}
 	
+	private boolean isInOrderBstWithoutExtraSpace(Node node) {
+		if(node == null) {
+			return true;
+		}else {
+			boolean leftBst = isInOrderBstWithoutExtraSpace(node.left);
+			boolean nodeBst = false;
+			if(prev != null && prev.data < node.data) {
+				nodeBst = true;
+			}else if(prev == null ) {
+				nodeBst = true;
+			}
+			prev = node;
+			
+			boolean rightBst = isInOrderBstWithoutExtraSpace(node.right);
+			
+			return leftBst && nodeBst && rightBst;
+		}
+		
+	}
 
 }
