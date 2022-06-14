@@ -9,13 +9,11 @@ public class InOrderSuccessor {
 	Node root;
 	boolean dataExists;
 	int count;
-	Node successor;
-	
+
 	public InOrderSuccessor() {
 		root = null;
 		dataExists = false;
-		count = 1;
-		successor = null;
+		count = 0;
 	}
 
 	public static void main(String[] args) {
@@ -26,12 +24,12 @@ public class InOrderSuccessor {
         tree.root.left.left = new Node(1);
         tree.root.left.right = new Node(3);
         
-        int x = 4;
-        tree.inOrderSuccessor(tree.root, x);
-        if (tree.successor != null)
+        int x = 5;
+        Node succ = tree.inOrderSuccessor(tree.root, x);
+        if (succ != null)
             System.out.printf(
-                "\n Inorder Successor of %d is %d ",
-                x, tree.successor.data);
+                "Inorder Successor of %d is %d ",
+                x, succ.data);
         else
             System.out.printf("\n Inorder Successor doesn't exit");
 	
@@ -39,21 +37,36 @@ public class InOrderSuccessor {
 
 
 
-	private void inOrderSuccessor(Node node, int x) {
-		if(node != null && count == 1) {
-			
-			inOrderSuccessor(node.left, x);
-			if(dataExists == true && count == 1) {
-				count--;
-				successor = node;
-				return ;
+	private Node inOrderSuccessor(Node node, int x) {
+		if(node == null)
+			return null;
+		else {
+			Node succ = null;
+			succ = inOrderSuccessor(node.left, x);
+			if(succ != null && dataExists ==  true) {
+				return succ;
 			}
 			if(node.data == x) {
 				dataExists = true;
+				//System.out.println("node when data exists : "+node);
 			}
-			inOrderSuccessor(node.right, x);
 			
+			if(dataExists) {
+				count++;
+			}
+			if(count == 2) {
+				//System.out.println("node when count is 2: "+node);
+				return node;
+			}
+				
+			
+			succ = inOrderSuccessor(node.right, x);
+			if(succ != null && dataExists ==  true) {
+				return succ;
+			}
+			return null;
 		}
+		
 	}
 	
 }
