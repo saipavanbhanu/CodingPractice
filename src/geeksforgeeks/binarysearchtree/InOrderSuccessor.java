@@ -2,6 +2,8 @@ package geeksforgeeks.binarysearchtree;
 
 import geeksforgeeks.binarysearchtree.IsBST.Node;
 
+/*In order successor without parent pointer*/
+
 public class InOrderSuccessor {
 
 	Node root;
