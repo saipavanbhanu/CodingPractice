@@ -3,6 +3,8 @@ package geeksforgeeks.graph;
 import java.util.LinkedList;
 import java.util.Queue;
 
+//constraint here is if all the vertices are reachable from the given vertex;
+
 public class BFSGraph {
 
 	private int V; // No. of vertices
