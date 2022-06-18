@@ -1,7 +1,7 @@
 //  Driver Code Starts
 //Initial Template for Java
 package geeksforgeeks.graph;
-
+//calculation of no of strongly connected components in the graph.
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
