@@ -1,7 +1,53 @@
 package leetcode.arrays;
 
+
+//https://www.youtube.com/watch?v=yD7wV8SyPrc&ab_channel=KeertiPurswani
+
 public class MedianOfTwoSortedArrays {
+	
+	//using binary search approach
+	//TC O(log(min(len1,len2)));
 	class Solution {
+	    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+	        if(nums1.length > nums2.length){
+	            int temp[] = nums1;
+	            nums1 = nums2;
+	            nums2 = temp;
+	        }
+	        
+	        int len1 = nums1.length;
+	        int len2 = nums2.length;
+	        int cut1 = len1/2;
+	        int cut2 = (len1+len2)/2 - cut1;
+	            
+	        int l = 0, h = len1;
+	        while(l <= h){
+	            cut1 = ( l + h )/2;
+	            cut2 = (len1 + len2)/2 - cut1;
+	            int l1 = ( cut1 == 0 ) ? Integer.MIN_VALUE : nums1[cut1-1];
+	            //System.out.println(cut1+" "+cut2);
+	            int l2 = ( cut2 == 0 ) ? Integer.MIN_VALUE : nums2[cut2-1];
+	            int r1 = ( cut1 == len1 ) ? Integer.MAX_VALUE : nums1[cut1];
+	            int r2 = ( cut2 == len2 ) ? Integer.MAX_VALUE : nums2[cut2];
+	            if( l1 > r2 ){
+	                h = cut1 - 1;
+	            }else if( l2 > r1 ){
+	                l = cut1 + 1;
+	            }else{
+	                if ( (len1 + len2)%2 == 0 ){
+	                    return ( Math.max((double)l1, (double)l2) + Math.min((double)r1, (double)r2) )/2;
+	                }else{
+	                    return Math.min(r1, r2);
+	                }
+	            }
+	        }
+	        return -1;
+	    }
+	}
+	
+	
+	//using merge method of merge sort
+	class Solution2 {
 	    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
 	        int len1 = nums1.length;
 	        int len2 = nums2.length;
