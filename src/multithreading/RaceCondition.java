@@ -2,7 +2,7 @@ package multithreading;
 
 import java.util.Random;
 
-class RaceCondition {
+public class RaceCondition {
 	public static void main(String args[]) throws InterruptedException {
 		RC.runTest();
 	}
