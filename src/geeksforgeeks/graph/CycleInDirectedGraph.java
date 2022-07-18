@@ -44,17 +44,13 @@ class Solution6 {
              if(isCyclicUtil(edgeVertex, adj, visited, stack)){
                  return true;
              }
-         }else{
-             if(stack[edgeVertex] == true){
-                 return true;
-             }else{
-            	 //stack[vertex] = false;
-                 //return false;
-             }
+         }else if(stack[edgeVertex] == true){
+        	 //if visited[edgeVertex] == true && stack[edgeVertex] == true then we have a cycle.
+             return true;
          }
      }
-     
      stack[vertex] = false;
+     //we have to remove the "vertex" from the recursion stack. 
      return false;
  }
  
