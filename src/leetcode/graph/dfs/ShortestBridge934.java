@@ -2,9 +2,7 @@ package leetcode.graph.dfs;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /*
  * step1: do the dfs to figure out the island and add all the nodes corresponding to island in visited.
@@ -43,104 +41,123 @@ public class ShortestBridge934 {
         }
 	    public int shortestBridge(int[][] grid) {
 	    	int n = grid.length;
-	    	Set<Node> visited = new HashSet<>(n);
+	    	boolean visited[][] = new boolean[n][n];
+	    	Deque<int[]> q = new ArrayDeque<>(n);
+	    	//Set<Node> visited = new HashSet<>(n);
 	        
 	    	for(int i = 0; i < n; i++) {
 	    		for(int j = 0; j < n; j++) {
-	    			Node node = new Node(i,j);
-	    			if(!visited.contains(node) && grid[i][j] == 1 ) {
-	    				visited.add(node);
-                        dfs(node, visited, grid);
+	    			//Node node = new Node(i,j);
+	    			if(visited[i][j] == false && grid[i][j] == 1 ) {
+	    				visited[i][j] = true;
+	    				q.add(new int[] {i,j});
+                        dfs(i, j, visited, grid, q);
                         //System.out.println("after dfs");
-	    				return bfs(visited, grid);
+	    				return bfs(visited, grid, q);
 	    			}
 	    		}
 	    	}
 	        return 0;
 	    }
 	    
-	    private boolean isValid(Node node, int [][] grid) {
+	    private boolean isValid(int i, int j, int [][] grid) {
 	    	int n = grid.length;
-	    	return !( node.i < 0 || node.i >= n || node.j < 0 || node.j >= n || grid[node.i][node.j] == 0 );
+	    	return !( i < 0 || i >= n || j < 0 || j >= n || grid[i][j] == 0 );
 	    }
 	    
-	    private boolean isValidInQueue(Node node, int [][] grid) {
+	    private boolean isValidInQueue(int i, int j, int [][] grid) {
 	    	int n = grid.length;
-	    	return !( node.i < 0 || node.i >= n || node.j < 0 || node.j >= n );
+	    	return !( i < 0 || i >= n || j < 0 || j >= n );
 	    }
 	    
-	    private void dfs(Node node, Set<Node> visited, int[][] grid) {
+	    private void dfs(int i, int j, boolean[][] visited, int[][] grid, Deque<int[]> q) {
 	    	//visited.add(node);
             //System.out.println("Inside dfs");
-	    	Node directNode = null;
-	    	directNode = new Node(node.i, node.j-1);
-	    	if(isValid( directNode, grid) && !visited.contains(directNode) ) {
-	    		visited.add(directNode);
-	    		dfs(directNode, visited, grid);
+	    	//Node directNode = null;
+	    	int x = -1, y = -1;
+	    	
+	    	x = i; y = j-1;
+	    	if(isValid( x, y, grid) && visited[x][y] == false ) {
+	    		visited[x][y] = true;
+	    		q.add(new int[] {x,y});
+	    		dfs(x, y, visited, grid, q);
 	    	}
-	    	directNode = new Node(node.i, node.j+1);
-	    	if(isValid( directNode, grid) && !visited.contains(directNode)) {
-	    		visited.add(directNode);
-	    		dfs(directNode, visited, grid);
+	    	
+	    	x = i; y = j+1;
+	    	if(isValid( x, y, grid) && visited[x][y] == false ) {
+	    		visited[x][y] = true;
+	    		q.add(new int[] {x,y});
+	    		dfs(x, y, visited, grid, q);
 	    	}
-	    	directNode = new Node(node.i-1, node.j);
-	    	if(isValid( directNode, grid) && !visited.contains(directNode)) {
-	    		visited.add(directNode);
-	    		dfs(directNode, visited, grid);
+	    	
+	    	x = i+1; y = j;
+	    	if(isValid( x, y, grid) && visited[x][y] == false ) {
+	    		visited[x][y] = true;
+	    		q.add(new int[] {x,y});
+	    		dfs(x, y, visited, grid, q);
 	    	}
-	    	directNode = new Node(node.i+1, node.j);
-	    	if(isValid( directNode, grid) && !visited.contains(directNode)) {
-	    		visited.add(directNode);
-	    		dfs(directNode, visited, grid);
+	    	
+	    	x = i-1; y = j;
+	    	if(isValid( x, y, grid) && visited[x][y] == false ) {
+	    		visited[x][y] = true;
+	    		q.add(new int[] {x,y});
+	    		dfs(x, y, visited, grid, q);
 	    	}
+	    	
 	    }
-	    private boolean reached2ndIsland(Node node, int[][] grid) {
-	    	return grid[node.i][node.j] == 1;
+	    private boolean reached2ndIsland(int i, int j, int[][] grid) {
+	    	return grid[i][j] == 1;
 	    }
-	    private int bfs(Set<Node> visited, int[][] grid) {
+	    
+	    private int bfs(boolean[][] visited, int[][] grid, Deque<int[]> q) {
 	    	int count = 0;
-	    	//System.out.println("after dfs: "+visited);
-            Deque<Node> q = new ArrayDeque<>(visited);
 	    	
             while(!q.isEmpty()){
                 int size = q.size();
                 //System.out.println(q);
                 for(int i = 0; i < size; i++) {
-                    Node node = q.pollFirst();
+                    int[] node = q.pollFirst();
 
-                    Node directNode = null;
-                    directNode = new Node(node.i, node.j-1);
-                    if(isValidInQueue( directNode, grid) && !visited.contains(directNode)) {
-                        visited.add(directNode);
-                        q.add(directNode);
-                        if(reached2ndIsland(directNode, grid)) {
+                    //Node directNode = null;
+                    //directNode = new Node(node.i, node.j-1);
+                    int x = -1, y = -1;
+                    
+                    x = node[0]; y = node[1]-1;
+                    if(isValidInQueue( x, y, grid) && visited[x][y] == false) {
+                        visited[x][y] = true;
+                        q.add(new int[] {x, y});
+                        if(reached2ndIsland(x, y, grid)) {
                             return count;
                         }
                     }
-                    directNode = new Node(node.i, node.j+1);
-                    if(isValidInQueue( directNode, grid) && !visited.contains(directNode)) {
-                        visited.add(directNode);
-                        q.add(directNode);
-                        if(reached2ndIsland(directNode, grid)) {
+                    
+                    
+                    x = node[0]; y = node[1]+1;
+                    if(isValidInQueue( x, y, grid) && visited[x][y] == false) {
+                        visited[x][y] = true;
+                        q.add(new int[] {x, y});
+                        if(reached2ndIsland(x, y, grid)) {
                             return count;
                         }
                     }
-                    directNode = new Node(node.i-1, node.j);
-                    if(isValidInQueue( directNode, grid) && !visited.contains(directNode)) {
-                        visited.add(directNode);
-                        q.add(directNode);
-                        if(reached2ndIsland(directNode, grid)) {
+                    x = node[0]-1; y = node[1];
+                    if(isValidInQueue( x, y, grid) && visited[x][y] == false) {
+                        visited[x][y] = true;
+                        q.add(new int[] {x, y});
+                        if(reached2ndIsland(x, y, grid)) {
                             return count;
                         }
                     }
-                    directNode = new Node(node.i+1, node.j);
-                    if(isValidInQueue( directNode, grid) && !visited.contains(directNode)) {
-                        visited.add(directNode);
-                        q.add(directNode);
-                        if(reached2ndIsland(directNode, grid)) {
+                    x = node[0]+1; y = node[1];
+                    if(isValidInQueue( x, y, grid) && visited[x][y] == false) {
+                        visited[x][y] = true;
+                        q.add(new int[] {x, y});
+                        if(reached2ndIsland(x, y, grid)) {
                             return count;
                         }
                     }
+                    
+                    
 	    	    }
                 count++;
             }
