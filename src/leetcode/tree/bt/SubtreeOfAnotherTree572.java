@@ -1,4 +1,4 @@
-package leetcode.tree;
+package leetcode.tree.bt;
 
 public class SubtreeOfAnotherTree572 {
 

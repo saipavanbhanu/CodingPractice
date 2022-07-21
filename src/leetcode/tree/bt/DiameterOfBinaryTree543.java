@@ -1,4 +1,4 @@
-package leetcode.tree;
+package leetcode.tree.bt;
 
 /*Calculated the diameter using the post order traversal ( bottom up approach ). 
 max - variable to track the max diameter so far. and finally returning the max;*/
