@@ -1,46 +1,44 @@
 package leetcode.tree;
 
+/*Calculated the diameter using the post order traversal ( bottom up approach ). 
+max - variable to track the max diameter so far. and finally returning the max;*/
+
 public class DiameterOfBinaryTree543 {
-	static class TreeNode {
-		int val;
-		TreeNode left;
-		TreeNode right;
-
-		TreeNode() {
-		}
-
-		TreeNode(int val) {
-			this.val = val;
-		}
-
-		TreeNode(int val, TreeNode left, TreeNode right) {
-			this.val = val;
-			this.left = left;
-			this.right = right;
-		}
-	}
-
+	  static class TreeNode {
+	      int val;
+	      TreeNode left;
+	      TreeNode right;
+	      TreeNode() {}
+	      TreeNode(int val) { this.val = val; }
+	      TreeNode(int val, TreeNode left, TreeNode right) {
+	          this.val = val;
+	          this.left = left;
+	          this.right = right;
+	      }
+	  }
+	 
 	class Solution {
-		public int diameterOfBinaryTree(TreeNode root) {
-			if (root == null) {
-				return 0;
-			}
-
-			int leftHeight = height(root.left);
-			int rightHeight = height(root.right);
-			int usingHeight = leftHeight + rightHeight + 1;
-
-			int leftDiameter = diameterOfBinaryTree(root.left);
-			int rightDiameter = diameterOfBinaryTree(root.right);
-			int usingDiameter = Math.max(leftDiameter, rightDiameter);
-
-			return Math.max(usingHeight - 1, usingDiameter);
-		}
-
-		int height(TreeNode node) {
-			if (node == null)
-				return 0;
-			return Math.max(height(node.left), height(node.right)) + 1;
-		}
-	}
-}
+	    int max;
+	    public int diameterOfBinaryTree(TreeNode root) {
+	        max = 0;
+	        dfs(root);
+	        return max;
+	    }
+	    
+	    //post order traversal //bottom up approach
+	    int dfs(TreeNode node){
+	        if(node == null)
+	            return 0;
+	        
+	        int lh = dfs(node.left);
+	        int rh = dfs(node.right);
+	        
+	        int withNode = lh + rh; //diameter which includes the node and left subtree and right subtree
+	        if(max < withNode){
+	            max = withNode;
+	        }
+	        
+	        //return the height
+	        return Math.max(lh, rh) + 1;
+	    }
+	}}
