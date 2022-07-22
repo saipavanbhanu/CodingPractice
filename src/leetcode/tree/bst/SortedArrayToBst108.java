@@ -29,7 +29,7 @@ public class SortedArrayToBst108 {
 		TreeNode arrayToBst(int start, int end, int[] nums) {
 			if (start <= end) {
 				int mid = (start + end) / 2;
-				TreeNode node = new TreeNode(nums[mid], null, null);
+				TreeNode node = new TreeNode(nums[mid]);
 				node.left = arrayToBst(start, mid - 1, nums);
 				node.right = arrayToBst(mid + 1, end, nums);
 				return node;
