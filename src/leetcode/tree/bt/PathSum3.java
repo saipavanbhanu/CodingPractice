@@ -1,5 +1,15 @@
 package leetcode.tree.bt;
 
+import java.util.HashMap;
+import java.util.Map;
+
+/*
+ * Approach similar to Sub Array sum equal to k in an array. 
+ * And even this approach is linear in terms of complexity 
+ * https://www.youtube.com/watch?v=MHocw0bP1rA&t=241s&ab_channel=Codebix
+ * https://www.youtube.com/watch?v=yyZA4v0x16w&ab_channel=Codebix
+ * */
+
 public class PathSum3 {
 
 	public class TreeNode {
@@ -23,45 +33,34 @@ public class PathSum3 {
 
 	class Solution {
 		int count;
-		int iTarget;
 
 		public int pathSum(TreeNode root, int targetSum) {
+			if (root == null) {
+				return 0;
+			}
 			count = 0;
-			iTarget = targetSum;
-			dfs(root, targetSum);
+			Map<Long, Integer> map = new HashMap<>();
+			map.put((long) 0, 1);
+
+			pathSumFromNode(root, 0, targetSum, map);
+
 			return count;
 		}
 
-		void dfs(TreeNode node, int targetSum) {
+		void pathSumFromNode(TreeNode node, long currentSum, int targetSum, Map<Long, Integer> map) {
 			if (node == null) {
 				return;
 			}
-			pathsCount(node, targetSum);
-			dfs(node.left, targetSum);
-			dfs(node.right, targetSum);
-		}
-
-		void pathsCount(TreeNode node, int targetSum) {
-			if (node == null) {
-				return;
+			long sum = node.val + currentSum;
+			if (map.containsKey(sum - targetSum) == true) {
+				count = count + map.get(sum - targetSum);
 			}
+			map.put(sum, map.getOrDefault(sum, 0) + 1);
 
-			// include the node
-			int target = targetSum - node.val;
-			if (target == 0) {
-				// System.out.println(node.val+","+targetSum);
-				count++;
-				pathsCount(node.left, iTarget);
-				pathsCount(node.right, iTarget);
-			} else {
-				pathsCount(node.left, target);
-				pathsCount(node.right, target);
-			}
+			pathSumFromNode(node.left, sum, targetSum, map);
+			pathSumFromNode(node.right, sum, targetSum, map);
 
-			// //not including the node
-			// target = targetSum;
-			// pathsCount(node.left, target);
-			// pathsCount(node.right, target);
+			map.put(sum, map.get(sum) - 1);
 
 		}
 	}
