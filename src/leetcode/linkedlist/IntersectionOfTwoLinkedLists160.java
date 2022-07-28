@@ -1,8 +1,5 @@
 package leetcode.linkedlist;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 public class IntersectionOfTwoLinkedLists160 {
 	/**
 	 * Definition for singly-linked list. public class ListNode { int val; ListNode
@@ -10,29 +7,47 @@ public class IntersectionOfTwoLinkedLists160 {
 	 */
 	public class Solution {
 		public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-			Deque<ListNode> st1 = new ArrayDeque<>();
-			while (headA != null) {
-				st1.push(headA);
-				headA = headA.next;
+			int count1 = 0;
+			ListNode iter1 = headA;
+			while (iter1 != null) {
+				count1++;
+				iter1 = iter1.next;
 			}
 
-			Deque<ListNode> st2 = new ArrayDeque<>();
-			while (headB != null) {
-				st2.push(headB);
-				headB = headB.next;
+			int count2 = 0;
+			ListNode iter2 = headB;
+			while (iter2 != null) {
+				count2++;
+				iter2 = iter2.next;
 			}
 
-			ListNode result = null;
-			while (!st1.isEmpty() && !st2.isEmpty()) {
-				ListNode first = st1.pop();
-				ListNode second = st2.pop();
-				if (first == second) {
-					result = first;
-				} else {
-					break;
+			if (count1 < count2) {
+				iter2 = headB;
+				iter1 = headA;
+				int diff = count2 - count1;
+				while (diff > 0) {
+					iter2 = iter2.next;
+					diff--;
+				}
+			} else {
+				iter2 = headB;
+				iter1 = headA;
+				int diff = count1 - count2;
+				while (diff > 0) {
+					iter1 = iter1.next;
+					diff--;
 				}
 			}
-			return result;
+
+			while (iter1 != null && iter2 != null) {
+				if (iter1 == iter2) {
+					return iter1;
+				}
+				iter1 = iter1.next;
+				iter2 = iter2.next;
+			}
+
+			return null;
 		}
 	}
 }
