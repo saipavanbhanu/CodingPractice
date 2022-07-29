@@ -6,6 +6,9 @@ import java.util.PriorityQueue;
  * Using priority queue will result in sorting order of all the k nodes from the origin. 
  * Using Quick select in QuickSort return the order in any format. (We don't need sorted output.) 
  * Quick select is quicker than the Heap/Priority Queue.*/
+/*
+ * Since not polling from the priority queue. it has to be efficient but actually it's not. 
+ * Quick select in Quick sort is way faster for getting the k closest nodes.*/
 
 public class KClosestPointstoOrigin973 {
 	class Solution {
@@ -45,11 +48,13 @@ public class KClosestPointstoOrigin973 {
 				}
 
 				int[][] result = new int[k][2];
-				for (int i = 0; i < k; i++) {
-					Point p = pq.poll();
+				int i = 0;
+				for (Point p : pq) {
 					result[i][0] = (int) p.x;
 					result[i][1] = (int) p.y;
+					i++;
 				}
+				pq = null;
 				return result;
 			}
 		}
