@@ -2,6 +2,11 @@ package leetcode.heap;
 
 import java.util.PriorityQueue;
 
+/*
+ * Using priority queue will result in sorting order of all the k nodes from the origin. 
+ * Using Quick select in QuickSort return the order in any format. (We don't need sorted output.) 
+ * Quick select is quicker than the Heap/Priority Queue.*/
+
 public class KClosestPointstoOrigin973 {
 	class Solution {
 		class Point implements Comparable<Point> {
