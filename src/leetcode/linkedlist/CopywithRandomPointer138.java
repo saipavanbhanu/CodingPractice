@@ -1,8 +1,5 @@
 package leetcode.linkedlist;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CopywithRandomPointer138 {
 
 	static class Node {
@@ -18,27 +15,60 @@ public class CopywithRandomPointer138 {
 	}
 
 	class Solution {
+		void print(Node head) {
+			Node iter = head;
+			while (iter != null) {
+				System.out.print(iter.val + ",");
+				iter = iter.next;
+			}
+			System.out.println();
+		}
+
+		void printR(Node head) {
+			System.out.println("Random");
+			Node iter = head;
+			while (iter != null) {
+				System.out.print(iter.val + ",");
+				iter = iter.random;
+			}
+			System.out.println();
+		}
+
 		public Node copyRandomList(Node head) {
 			if (head == null) {
 				return head;
 			}
-
-			Map<Node, Node> map = new HashMap<>(1000);
+			// copy the node next to the original node
 			Node iter = head;
 			while (iter != null) {
-				map.put(iter, new Node(iter.val));
-				iter = iter.next;
+				Node copy = new Node(iter.val);
+				copy.next = iter.next;
+				iter.next = copy;
+				iter = copy.next;
 			}
+			// print(head);
 
+			// set the random pointer to the one in copied nodes.
+			Node copyHead = head.next;
 			iter = head;
 			while (iter != null) {
-				Node copy = map.get(iter);
-				copy.next = map.get(iter.next);
-				copy.random = map.get(iter.random);
+				// System.out.print(iter.val+",");
+				if (iter.random != null)
+					iter.next.random = iter.random.next;
+				iter = iter.next.next;
+			}
+			// printR(copyHead);
+			// remove the copied nodes from the original list
+			iter = head;
+			while (iter != null) {
+				Node copy = iter.next;
+				iter.next = iter.next.next;
+				if (copy.next != null)
+					copy.next = copy.next.next;
 				iter = iter.next;
 			}
 
-			return map.get(head);
+			return copyHead;
 		}
 	}
 }
