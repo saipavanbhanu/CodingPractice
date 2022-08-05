@@ -1,6 +1,6 @@
 package multithreading;
 
-public class ThreadUsage {
+public class CreatingAThread {
 
 	public static void main(String[] args) {
 		Thread t = new Thread(() -> {
