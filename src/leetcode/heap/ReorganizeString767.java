@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
 public class ReorganizeString767 {
-
+ 
 	class Solution {
 		static class Node implements Comparable<Node> {
 			char ch;
