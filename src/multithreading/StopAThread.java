@@ -2,44 +2,50 @@ package multithreading;
 
 public class StopAThread {
 
-	static class MyThread extends Thread {
+	static class MyRunnable implements Runnable {
+
 		private boolean doStop = false;
 
 		public synchronized void doStop() {
-			doStop = true;
+			System.out.println("Cleaning up the resources");
+			this.doStop = true;
+			System.out.println("stopping the thread");
 		}
 
-		public boolean keepRunning() {
-			return doStop == false;
+		private synchronized boolean keepRunning() {
+			return this.doStop == false;
 		}
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
 			while (keepRunning()) {
-				System.out.println("Running the thread");
+				// keep doing what this thread should do.
+				System.out.println("Running");
+
 				try {
-					Thread.sleep(500);
+					Thread.sleep(3L * 1000L);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
 			}
-			cleanUp();
-			System.out.println("Last statement of the thread");
-		}
-		public void cleanUp() {
-			System.out.println("cleaning up the resources");
 		}
 	}
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
+		MyRunnable myRunnable = new MyRunnable();
 
-		MyThread t = new MyThread();
-		t.start();
-		Thread.sleep(5000);
-		t.doStop();
-		System.out.println("Last statement of the main thread");
+		Thread thread = new Thread(myRunnable);
+
+		thread.start();
+
+		try {
+			Thread.sleep(10L * 1000L);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		myRunnable.doStop();
 	}
 
 }
