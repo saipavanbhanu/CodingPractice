@@ -7,7 +7,7 @@ public class CounterSharedState {
 		Counter(){
 			this.count = 0;
 		}
-		int incrementCount() {
+		synchronized int incrementCount() {
 			return ++this.count;
 		}
 		int getCount() {
