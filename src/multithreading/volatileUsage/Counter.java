@@ -1,10 +1,14 @@
 package multithreading.volatileUsage;
 
 class Counter {
-	int count;
+	public volatile int count = 0;
 	
-	public synchronized int incCount() {
-		return ++count;
+	public boolean incCount() {
+		if(count == 10) {
+			return false;
+		}
+		++count;
+		return true;
 	}
 	
 	public int getCount() {

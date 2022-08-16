@@ -8,7 +8,7 @@ public class VolatileUsage {
 		Thread t1 = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				for(int i = 0; i < 1_000_000; i++) {
+				for(int i = 0; i < 15; i++) {
 					c.incCount();
 				}
 				System.out.println(Thread.currentThread().getName()+":"+c.getCount());
@@ -18,7 +18,7 @@ public class VolatileUsage {
 		Thread t2 = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				for(int i = 0; i < 1_000_000; i++) {
+				for(int i = 0; i < 15; i++) {
 					c.incCount();
 				}
 				System.out.println(Thread.currentThread().getName()+":"+c.getCount());
