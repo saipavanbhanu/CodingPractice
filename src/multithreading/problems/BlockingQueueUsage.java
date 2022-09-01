@@ -51,10 +51,10 @@ public class BlockingQueueUsage {
 		Thread.sleep(1000 * 4);
 		t2.start();
 		
-		t2.join();
+		//t2.join();
 		t3.start();
-		t1.join();
-		t3.join();
+//		t1.join();
+//		t3.join();
 		
 	}
 }
