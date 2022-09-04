@@ -40,7 +40,7 @@ public class UnisexBathroomProblem {
 class UnisexBathRoom {
 	Sex inUseBy;
 	Semaphore capacity;
-	Semaphore lock;
+	Semaphore lock; //lock of the unisex bathroom object
 	int size; // no of persons already present in the bathroom
 
 	public UnisexBathRoom(int capacity) {
@@ -51,55 +51,67 @@ class UnisexBathRoom {
 	}
 
 	public void useBathroomByMale(Sex user, String name) throws InterruptedException {
-
-		synchronized (this) {
-			if (inUseBy != user && inUseBy != Sex.NONE) {
-				wait();
-			}
+		lock.acquire();
+		while(inUseBy == Sex.FEMALE) {
+			lock.release();
+			wait();
+			lock.acquire();
+		}
+		lock.release();
+		
+		
+		lock.acquire();
 			System.out.println("Male:"+name + " trying to enter bathroom");
 			capacity.acquire();
 			inUseBy = user;
 			System.out.println("Male:"+name + " entered the bathroom");
 			size++;
-		}
+		lock.release();
+		
 		System.out.println("Male:"+name + " using the bathroom");
 		Thread.sleep(1000);
 
-		synchronized (this) {
+		lock.acquire();
 			capacity.release();
 			size--;
 			if (size == 0)
 				inUseBy = Sex.NONE;
 			notifyAll();
-		}
-
+		lock.release();
+		
 		System.out.println("Male:"+name + " leaving the bathroom");
 	}
 	
 	public void useBathroomByFemale(Sex user, String name) throws InterruptedException {
+		lock.acquire();
+		while(inUseBy == Sex.MALE) {
+			lock.release();
+			wait();
+			lock.acquire();
+		}
+		lock.release();
 		
-		synchronized (this) {
-			if (inUseBy != user && inUseBy != Sex.NONE) {
-				wait();
-			}
-			System.out.println("Female:"+name + " trying to enter bathroom");
+		
+		lock.acquire();
+			System.out.println("Male:"+name + " trying to enter bathroom");
 			capacity.acquire();
 			inUseBy = user;
-			System.out.println("Female:"+name + " entered the bathroom");
+			System.out.println("Male:"+name + " entered the bathroom");
 			size++;
-		}
-		System.out.println("Female:"+name + " using the bathroom");
-		Thread.sleep(500);
+		lock.release();
+		
+		System.out.println("Male:"+name + " using the bathroom");
+		Thread.sleep(1000);
 
-		synchronized (this) {
+		lock.acquire();
 			capacity.release();
 			size--;
 			if (size == 0)
 				inUseBy = Sex.NONE;
 			notifyAll();
-		}
-
-		System.out.println("Female:"+name + " leaving the bathroom");
+		lock.release();
+		
+		System.out.println("Male:"+name + " leaving the bathroom");
 	}
 }
 
