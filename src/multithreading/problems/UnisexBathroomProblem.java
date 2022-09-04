@@ -3,6 +3,8 @@ package multithreading.problems;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
+/*Solution not working*/
+
 public class UnisexBathroomProblem {
 
 	public static void main(String[] args) {
