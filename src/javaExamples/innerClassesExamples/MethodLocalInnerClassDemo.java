@@ -1,5 +1,8 @@
 package javaExamples.innerClassesExamples;
 
+/*in method local inner classes it is not possible to call the non-final variables inside the inner classes 
+ * hence we must declare that local variables must be final then only it is possible to access that members.*/
+
 public class MethodLocalInnerClassDemo {
 	private int a = 100;
 	void m2() {
