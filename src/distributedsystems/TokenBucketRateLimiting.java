@@ -1,4 +1,4 @@
-package multithreading.problems;
+package distributedsystems;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
