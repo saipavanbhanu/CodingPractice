@@ -1,4 +1,4 @@
-package distributedsystems;
+package distributedsystems.ratelimiting;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
