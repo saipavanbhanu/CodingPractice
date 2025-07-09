@@ -48,6 +48,7 @@ Comprehensive examples and implementations of Java multithreading concepts and c
 - **Deadlock Prevention** - Strategies and detection mechanisms
 - **CountDownLatch** - Implement barrier.
 - **Uber seating problem** - Implemented using cyclic barrier, semaphore & Reentrant lock
+- **Multithreaded Merge sort** -- Implemented multi threaded merge sort - each thread for each recursive sub problem.
 
 ### Key Learning Outcomes:
 - Mastering Java concurrency utilities
