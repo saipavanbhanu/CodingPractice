@@ -47,6 +47,7 @@ Comprehensive examples and implementations of Java multithreading concepts and c
 - **Lock-Free Programming** - Atomic operations and CAS
 - **Deadlock Prevention** - Strategies and detection mechanisms
 - **CountDownLatch** - Implement barrier.
+- **Uber seating problem** - Implemented using cyclic barrier, semaphore & Reentrant lock
 
 ### Key Learning Outcomes:
 - Mastering Java concurrency utilities
