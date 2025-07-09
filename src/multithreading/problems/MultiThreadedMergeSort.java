@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class MultiThreadedMergeSort {
-    private static final int size = 25;
+    private static final int size = 50;
     private static Random random = new Random();
     private static int[] input = new int[size];
     public static void main(String[] args) {
@@ -21,8 +21,29 @@ public class MultiThreadedMergeSort {
             return;
         }
         int mid = (start+end)/2;
-        mergesort(start, mid);
-        mergesort(mid+1, end);
+        Thread t1 = new Thread(){
+            @Override
+            public void run() {
+                mergesort(start, mid);
+            }
+        };
+
+        Thread t2 = new Thread(){
+            @Override
+            public void run() {
+                mergesort(mid+1, end);
+            }
+        };
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         //System.out.println("start: "+start+"mid: "+mid+"end: "+end);
         int []tempArr = new int[size];
         int arrIndex = start;
