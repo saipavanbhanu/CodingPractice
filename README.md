@@ -46,6 +46,7 @@ Comprehensive examples and implementations of Java multithreading concepts and c
 - **Concurrent Collections** - Thread-safe data structures
 - **Lock-Free Programming** - Atomic operations and CAS
 - **Deadlock Prevention** - Strategies and detection mechanisms
+- **CountDownLatch** - Implement barrier.
 
 ### Key Learning Outcomes:
 - Mastering Java concurrency utilities
