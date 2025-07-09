@@ -13,12 +13,10 @@ public class CountDownLatchUsage {
             list.add(t);
             t.start();
         }
-        for(Thread t : list){
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
         System.out.println("Main thread after count down latch finished.");
     }
